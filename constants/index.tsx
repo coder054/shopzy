@@ -6,4 +6,7 @@ export const ROUTES = {
   home: "/",
   cart: "/cart",
   signIn: "/sign-in",
+  product: {
+    detail: (slug: string) => `/product/${slug}`,
+  },
 };

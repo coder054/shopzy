@@ -1,3 +1,5 @@
+import ProductCard from "./product-card";
+
 export default function ProductList({
   data,
   title,
@@ -11,7 +13,7 @@ export default function ProductList({
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {(data || []).map((o) => (
-          <div className=" ">{o.name}</div>
+          <ProductCard product={o} key={o.name} />
         ))}
       </div>
     </div>
