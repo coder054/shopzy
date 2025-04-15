@@ -1,9 +1,9 @@
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-export default async function App() {
-  await delay(2000);
+import ProductList from "@/components/shared/product/product-list";
+import sampleData from "@/db/sample-data";
+export default function App() {
   return (
-    <h1 className="border border-red-400 text-green-300">
-      Hello world! sraiet nisraet eisrtaen
-    </h1>
+    <>
+      <ProductList data={sampleData.products} title="Newest arrival" />
+    </>
   );
 }
