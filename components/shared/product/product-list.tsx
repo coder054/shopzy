@@ -1,10 +1,11 @@
+import { Product } from "@/types";
 import ProductCard from "./product-card";
 
 export default function ProductList({
   data,
   title,
 }: {
-  data: any;
+  data: Product[];
   title?: string;
 }) {
   return (
