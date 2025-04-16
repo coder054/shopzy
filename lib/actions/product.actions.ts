@@ -3,7 +3,6 @@
 import { LATEST_PRODUCTS_LIMIT } from "@/constants";
 import { convertToPlainObject } from "../utils";
 import { prisma } from "@/db/prisma";
-import { equal } from "node:assert";
 
 export async function getLatestProduct() {
   const data = await prisma.product.findMany({

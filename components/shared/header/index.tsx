@@ -1,9 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { APP_NAME, ROUTES } from "@/constants";
-import { ShoppingCart, UserIcon } from "lucide-react";
+import { APP_NAME } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import ModeToggle from "./mode-toggle";
 import Menu from "./menu";
 
 export default function Header() {

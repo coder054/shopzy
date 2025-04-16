@@ -4,7 +4,7 @@ export default async function App() {
   const latestProducts = await getLatestProduct();
   return (
     <>
-      <ProductList data={latestProducts} title="Newest arrival" />
+      <ProductList data={latestProducts as any} title="Newest arrival" />
     </>
   );
 }
