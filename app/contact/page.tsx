@@ -1,6 +1,7 @@
-
 export default function Contact() {
-  <h1 className="" style={{ color: "red" }}>
-    Contact
-  </h1>;
+  return (
+    <h1 className="" style={{ color: "red" }}>
+      Contact
+    </h1>
+  );
 }
