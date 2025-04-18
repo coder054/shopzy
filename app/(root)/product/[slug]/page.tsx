@@ -1,4 +1,5 @@
 import ProductImages from "@/components/product/product-images";
+import AddToCart from "@/components/shared/product/add-to-cart";
 import ProductPrice from "@/components/shared/product/product-price";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,16 @@ export default async function ProductDetail(props: {
             </div>
             {product.stock > 0 && (
               <div className=" flex-center">
-                <Button className="w-full">Add to cart</Button>
+                <AddToCart
+                  item={{
+                    image: product.images?.[0],
+                    name: product.name,
+                    price: Number(product.price),
+                    productId: product.id,
+                    qty: 1,
+                    slug: product.slug,
+                  }}
+                />
               </div>
             )}
           </CardContent>
