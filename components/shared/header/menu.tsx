@@ -10,6 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ROUTES } from "@/constants";
+import UserButton from "./user-button";
 // import UserButton from './user-button';
 
 const Menu = () => {
@@ -22,6 +23,7 @@ const Menu = () => {
             <ShoppingCart /> Cart
           </Link>
         </Button>
+        <UserButton></UserButton>
       </nav>
       <nav className="md:hidden">
         <Sheet>
@@ -36,6 +38,7 @@ const Menu = () => {
                 <ShoppingCart /> Cart
               </Link>
             </Button>
+            <UserButton></UserButton>
             <Button asChild>
               <Link href={ROUTES.signIn}>
                 <UserIcon /> Sign in
