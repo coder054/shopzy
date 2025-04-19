@@ -2,8 +2,8 @@ import ProductImages from "@/components/product/product-images";
 import AddToCart from "@/components/shared/product/add-to-cart";
 import ProductPrice from "@/components/shared/product/product-price";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getMyCart } from "@/lib/actions/cart.actions";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
 export default async function ProductDetail(props: {
@@ -17,6 +17,8 @@ export default async function ProductDetail(props: {
   if (!product) {
     return notFound();
   }
+
+  const cart = await getMyCart();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 ">
@@ -76,6 +78,7 @@ export default async function ProductDetail(props: {
                     qty: 1,
                     slug: product.slug,
                   }}
+                  cart={cart}
                 />
               </div>
             )}
