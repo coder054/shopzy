@@ -9,6 +9,10 @@ import { cartItemSchema, insertCartSchema } from "../validators";
 import { revalidatePath } from "next/cache";
 import { ROUTES } from "@/constants";
 
+const revalidateProductDetailPage = (slug: string) => {
+  revalidatePath(ROUTES.product.detail(slug));
+};
+
 // Calculate cart price based on items
 const calcPrice = (items: CartItem[]) => {
   const itemsPrice = round2(
@@ -59,8 +63,7 @@ export async function addItemToCart(data: CartItem) {
         data: newCart,
       });
 
-      // revalidate product detail page
-      revalidatePath(ROUTES.product.detail(product.slug));
+      revalidateProductDetailPage(product.slug);
 
       return {
         success: true,
@@ -95,7 +98,7 @@ export async function addItemToCart(data: CartItem) {
       });
 
       // revalidate product detail page
-      revalidatePath(ROUTES.product.detail(product.slug));
+      revalidateProductDetailPage(product.slug);
 
       return {
         success: true,
@@ -181,7 +184,7 @@ export async function removeItemFromCart(productId: string) {
       },
     });
 
-    revalidatePath(ROUTES.product.detail(product.slug));
+    revalidateProductDetailPage(product.slug);
     return {
       success: true,
       message: `${product.name}  ${
