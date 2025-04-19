@@ -41,3 +41,10 @@ export function formatError(error: any): string {
       : JSON.stringify(error.message);
   }
 }
+
+// Round number to 2 decimal places
+// round2("50.15457") // 50.15
+// round2(50.15457) // 50.15
+export function round2(value: number | string) {
+  return Math.round(parseFloat(String(value)) * 100) / 100;
+}
