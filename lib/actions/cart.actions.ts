@@ -1,9 +1,8 @@
 "use server";
 import { auth } from "@/auth";
 import { CartItem } from "@/types";
-import { Telemetry } from "next/dist/telemetry/storage";
 import { cookies } from "next/headers";
-import { convertToPlainObject, formatError, round2 } from "../utils";
+import { formatError, round2 } from "../utils";
 import { prisma } from "@/db/prisma";
 import { cartItemSchema, insertCartSchema } from "../validators";
 import { revalidatePath } from "next/cache";

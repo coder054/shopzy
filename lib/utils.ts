@@ -17,7 +17,6 @@ export function formatNumberWithDecimal(num: number): string {
 }
 
 // Format Errors
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any): string {
   if (error.name === "ZodError") {
     // Handle Zod error
@@ -47,4 +46,22 @@ export function formatError(error: any): string {
 // round2(50.15457) // 50.15
 export function round2(value: number | string) {
   return Math.round(parseFloat(String(value)) * 100) / 100;
+}
+
+const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
+  currency: "USD",
+  style: "currency",
+  minimumFractionDigits: 2,
+});
+
+// Format currency
+// formatCurrency(5.154545) // $5.15
+export function formatCurrency(amount: number | string | null) {
+  if (typeof amount === "number") {
+    return CURRENCY_FORMATTER.format(amount);
+  } else if (typeof amount === "string") {
+    return CURRENCY_FORMATTER.format(Number(amount));
+  } else {
+    return "NaN";
+  }
 }

@@ -1,3 +1,4 @@
+import { ShippingAddress } from "@/types";
 import { z } from "zod";
 export const APP_NAME = "Shopzy";
 export const APP_DESCRIPTION = "A modern shop";
@@ -10,6 +11,7 @@ export const ROUTES = {
   product: {
     detail: (slug: string) => `/product/${slug}`,
   },
+  shippingAddress: "/shipping-address",
 };
 
 export const LATEST_PRODUCTS_LIMIT =
@@ -35,3 +37,11 @@ declare global {
 if (typeof window !== "undefined") {
   window.z = z;
 }
+
+export const shippingAddressDefaultValues: ShippingAddress = {
+  fullName: "John Doe",
+  streetAddress: "123 Main St",
+  city: "Anytown",
+  postalCode: "12345",
+  country: "USA",
+};

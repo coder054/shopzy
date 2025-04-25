@@ -119,6 +119,7 @@ export const config = {
     // },
 
     authorized({ request, auth }: any) {
+      console.log("aaa authorized");
       // Check for cart cookie
       if (!request.cookies.get("sessionCartId")) {
         // Generate cart cookie
