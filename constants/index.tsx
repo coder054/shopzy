@@ -13,6 +13,7 @@ export const ROUTES = {
   },
   shippingAddress: "/shipping-address",
   paymentMethod: "/payment-method",
+  placeOrder: "/place-order",
 };
 
 export const LATEST_PRODUCTS_LIMIT =
@@ -46,3 +47,10 @@ export const shippingAddressDefaultValues: ShippingAddress = {
   postalCode: "12345",
   country: "USA",
 };
+
+export const PAYMENT_METHODS = process.env.NEXT_PUBLIC_PAYMENT_METHODS
+  ? process.env.NEXT_PUBLIC_PAYMENT_METHODS.split(", ")
+  : [];
+
+export const DEFAULT_PAYMENT_METHOD =
+  process.env.NEXT_PUBLIC_DEFAULT_PAYMENT_METHOD || "PayPal";
