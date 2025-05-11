@@ -147,8 +147,21 @@ export const config = {
 
     authorized({ request, auth }: any) {
       console.log("aaa authorized");
-      // Check for cart cookie
+      const protectedPaths = [
+        /\/shipping-address/,
+        /\/payment-method/,
+        /\/place-order/,
+        /\/profile/,
+        /\/user\/(.*)/,
+        /\/order\/(.*)/,
+        /\/admin/,
+      ];
+      const { pathname } = request.nextUrl;
+      if (!auth && protectedPaths.some((p) => p.test(pathname))) {
+        return false;
+      }
       if (!request.cookies.get("sessionCartId")) {
+        // Check for cart cookie
         // Generate cart cookie
         const sessionCartId = crypto.randomUUID();
 
