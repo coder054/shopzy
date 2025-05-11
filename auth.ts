@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./db/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export const config = {
   pages: {
@@ -71,6 +72,7 @@ export const config = {
     async jwt(params: any) {
       const { trigger, session, token, user } = params;
       if (user) {
+        token.id = user.id;
         token.role = user.role;
 
         if (user.name === "NO_NAME") {
@@ -83,6 +85,31 @@ export const config = {
               name: token.name,
             },
           });
+        }
+        if (trigger === "signIn" || trigger === "signUp") {
+          const cookiesObj = await cookies();
+          const sessionCartId = cookiesObj.get("sessionCartId")?.value;
+          if (sessionCartId) {
+            const sessionCart = await prisma.cart.findFirst({
+              where: { sessionCartId },
+            });
+            if (sessionCart) {
+              // override any existing user cart
+              await prisma.cart.deleteMany({
+                where: { userId: user.id },
+              });
+
+              // assign the guest cart to the logged-in user
+              await prisma.cart.update({
+                where: {
+                  id: sessionCart.id,
+                },
+                data: {
+                  userId: user.id,
+                },
+              });
+            }
+          }
         }
       }
 
