@@ -12,6 +12,7 @@ export const ROUTES = {
     detail: (slug: string) => `/product/${slug}`,
   },
   shippingAddress: "/shipping-address",
+  paymentMethod: "/payment-method",
 };
 
 export const LATEST_PRODUCTS_LIMIT =
