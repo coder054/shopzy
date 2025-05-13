@@ -14,6 +14,9 @@ export const ROUTES = {
   shippingAddress: "/shipping-address",
   paymentMethod: "/payment-method",
   placeOrder: "/place-order",
+  order: {
+    detail: (id: string) => `/order/${id}`,
+  },
 };
 
 export const LATEST_PRODUCTS_LIMIT =
