@@ -14,6 +14,7 @@ import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
 import { z } from "zod";
+import { Just, Nothing } from "../Maybe";
 
 export async function signInWithCredentials(
   _prevState: unknown,
@@ -96,6 +97,26 @@ export async function getUserById(userId: string) {
   }
 
   return user;
+}
+
+export async function getCurrentUser() {
+  const session = await auth();
+
+  if (!session) {
+    return new Nothing();
+  }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: session?.user?.id,
+    },
+  });
+
+  if (!user) {
+    return new Nothing();
+  }
+
+  return new Just(user);
 }
 
 export async function updateUserAddress(data: ShippingAddress) {

@@ -38,7 +38,6 @@ const PaymentMethodForm = ({
 
   const [isPending, startTransition] = useTransition();
   const onSubmit = async (values: any) => {
-    console.log("aaa values", values);
     startTransition(async () => {
       const res = await updateUserPaymentMethod(values);
       if (!res.success) {

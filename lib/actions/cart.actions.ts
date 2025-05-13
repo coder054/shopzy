@@ -47,8 +47,6 @@ export async function addItemToCart(data: CartItem) {
       throw new Error("Product not found");
     }
 
-    console.log("aaa cart", cart);
-
     if (!cart) {
       // Create new cart object
       const newCart = insertCartSchema.parse({

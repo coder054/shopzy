@@ -36,7 +36,6 @@ export default function ShippingAddressForm({
 
   const [isPending, startTransition] = useTransition();
   const onSubmit: SubmitHandler<ShippingAddress> = (values) => {
-    console.log("aaa values", values);
     startTransition(async () => {
       const res = await updateUserAddress(values);
       if (!res.success) {
