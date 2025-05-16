@@ -23,6 +23,7 @@ import { Nothing } from "@/lib/Maybe";
 import { headers } from "next/headers";
 
 import queryString from "query-string";
+import PlaceOrderForm from "./place-order-form";
 
 export const metadata = {
   title: "Place Order",
@@ -146,7 +147,7 @@ const PlaceOrderPage = async () => {
                 <div>Total</div>
                 <div>{formatCurrency(cart.totalPrice)}</div>
               </div>
-              {/* Form Here */}
+              <PlaceOrderForm />
             </CardContent>
           </Card>
         </div>{" "}
