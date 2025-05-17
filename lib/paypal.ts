@@ -3,7 +3,7 @@ const base = process.env.PAYPAL_API_URL;
 export const paypal = {};
 
 // generate access token
-async function generateAccessToken() {
+export async function generateAccessToken() {
   const { PAYPAL_CLIENT_ID, PAYPAL_APP_SECRET } = process.env;
   const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_APP_SECRET}`).toString(
     "base64",
@@ -21,7 +21,7 @@ async function generateAccessToken() {
   return jsonData.access_token;
 }
 
-async function handleResponse(response: any) {
+export async function handleResponse(response: any) {
   if (response.status === 200 || response.status === 201) {
     return response.json();
   }
