@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { requireAdmin } from "@/app/lib/auth-guard";
+import { requireAdmin } from "@/lib/auth-guard";
 import Charts from "./charts";
 
 export const metadata: Metadata = {

@@ -13,6 +13,7 @@ import { revalidatePath } from "next/cache";
 import { paypal } from "../paypal";
 import { PaymentResult, CartItem } from "@/types";
 import { Prisma } from "@prisma/client";
+import { cookies } from "next/headers";
 
 export const createOrder = async () => {
   try {
@@ -322,5 +323,25 @@ export async function getOrderSummary() {
     totalSales,
     latestOrders,
     salesData,
+  };
+}
+
+export async function getAllOrders({
+  page,
+  limit = PAGE_SIZE,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    skip: (page - 1) * limit,
+    include: { user: { select: { name: true } } },
+  });
+  const dataCount = await prisma.order.count();
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
   };
 }
