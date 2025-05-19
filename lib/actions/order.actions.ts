@@ -14,6 +14,7 @@ import { paypal } from "../paypal";
 import { PaymentResult, CartItem } from "@/types";
 import { Prisma } from "@prisma/client";
 import { cookies } from "next/headers";
+import { trackSynchronousPlatformIOAccessInDev } from "next/dist/server/app-render/dynamic-rendering";
 
 export const createOrder = async () => {
   try {
@@ -358,6 +359,48 @@ export async function deleteOrder(id: string) {
       success: true,
       message: "Order deleted successfully",
     };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+export async function updateOrderToPaidByCOD(orderId: string) {
+  try {
+    await updateOrderToPaid({ orderId });
+    revalidatePath(ROUTES.order.detail(orderId));
+    return { success: true, message: "order paid successfully" };
+  } catch (error) {
+    return {
+      success: false,
+      message: formatError(error),
+    };
+  }
+}
+
+export async function deliverOrder(orderId: string) {
+  try {
+    const order = await prisma.order.findFirst({
+      where: {
+        id: orderId,
+      },
+    });
+    if (!order) {
+      throw new Error("order not found");
+    }
+    if (!order.isPaid) {
+      throw new Error("order is not paid");
+    }
+    await prisma.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        isDelivered: true,
+        deliveredAt: new Date(),
+      },
+    });
+    revalidatePath(ROUTES.order.detail(orderId));
+    return { success: true, message: "order delivered successfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
