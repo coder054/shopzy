@@ -57,3 +57,5 @@ export const PAYMENT_METHODS = process.env.NEXT_PUBLIC_PAYMENT_METHODS
 
 export const DEFAULT_PAYMENT_METHOD =
   process.env.NEXT_PUBLIC_DEFAULT_PAYMENT_METHOD || "PayPal";
+
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 2;

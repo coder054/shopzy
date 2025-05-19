@@ -5,7 +5,7 @@ import { convertToPlainObject, formatError } from "../utils";
 import { auth } from "@/auth";
 import { getMyCart } from "./cart.actions";
 import { getUserById } from "./user.actions";
-import { ROUTES } from "@/constants";
+import { PAGE_SIZE, ROUTES } from "@/constants";
 import { insertOrderSchema } from "../validators";
 import { Order } from "@/types";
 import { prisma } from "@/db/prisma";
@@ -250,4 +250,32 @@ export async function updateOrderToPaid({
   if (!updatedOrder) {
     throw new Error("order not found");
   }
+}
+
+// Get User Orders
+export async function getMyOrders({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const session = await auth();
+  if (!session) throw new Error("User is not authenticated");
+
+  const data = await prisma.order.findMany({
+    where: { userId: session?.user?.id },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    skip: (page - 1) * limit,
+  });
+
+  const dataCount = await prisma.order.count({
+    where: { userId: session?.user?.id },
+  });
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
 }
