@@ -13,12 +13,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { requireAdmin } from "@/app/lib/auth-guard";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
 };
 
 const AdminOverviewPage = async () => {
+  await requireAdmin();
   const session = await auth();
 
   // Make sure the user is an admin
