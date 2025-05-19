@@ -17,6 +17,12 @@ export const ROUTES = {
   order: {
     detail: (id: string) => `/order/${id}`,
   },
+  admin: {
+    overview: "/admin/overview",
+    products: "/admin/products",
+    orders: "/admin/orders",
+    users: "/admin/users",
+  },
 };
 
 export const LATEST_PRODUCTS_LIMIT =
