@@ -1,3 +1,4 @@
+import Pagination from "@/components/shared/pagination";
 import {
   Table,
   TableBody,
@@ -23,7 +24,7 @@ const OrdersPage = async (props: {
     page: Number(page) || 1,
   });
 
-  console.log(orders);
+  console.log("aaa orders", orders);
 
   return (
     <div className="space-y-2">
@@ -44,8 +45,13 @@ const OrdersPage = async (props: {
             {orders.data.map((order) => (
               <TableRow key={order.id}>
                 <TableCell>{formatId(order.id)}</TableCell>
-                <TableCell> {formatCurrency(order.totalPrice)}</TableCell>
-                <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
+
+                <TableCell>
+                  {formatDateTime(order.createdAt).dateTime}
+                </TableCell>
+                <TableCell>
+                  {formatCurrency(Number(order.totalPrice))}
+                </TableCell>
                 <TableCell>
                   {order.isPaid && order.paidAt
                     ? formatDateTime(order.paidAt).dateTime
@@ -65,6 +71,13 @@ const OrdersPage = async (props: {
             ))}
           </TableBody>
         </Table>
+
+        {orders.totalPages > 1 && (
+          <Pagination
+            page={Number(page) || 1}
+            totalPages={orders?.totalPages}
+          />
+        )}
       </div>
     </div>
   );
