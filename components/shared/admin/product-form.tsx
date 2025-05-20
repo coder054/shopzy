@@ -371,7 +371,7 @@ const ProductForm = ({
             size="lg"
             disabled={form.formState.isSubmitting}
           >
-            {form.formState.isSubmitting ? "Submitting" : `${type} Productttt5`}
+            {form.formState.isSubmitting ? "Submitting" : `${type} Product`}
           </Button>
         </div>
       </form>
