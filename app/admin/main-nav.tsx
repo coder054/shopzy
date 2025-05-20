@@ -12,7 +12,7 @@ const links = [
   },
   {
     title: "Products",
-    href: ROUTES.admin.products,
+    href: ROUTES.admin.products.base,
   },
   {
     title: "Orders",

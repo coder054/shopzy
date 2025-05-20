@@ -19,7 +19,10 @@ export const ROUTES = {
   },
   admin: {
     overview: "/admin/overview",
-    products: "/admin/products",
+    products: {
+      base: "/admin/products",
+      create: "/admin/products/create",
+    },
     orders: "/admin/orders",
     users: "/admin/users",
   },
