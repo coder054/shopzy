@@ -28,6 +28,9 @@ import { Button } from "@/components/ui/button";
 import { createProduct, updateProduct } from "@/lib/actions/product.actions";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { UploadButton } from "@/lib/uploadthing";
 
 const ProductForm = ({
   type,
@@ -81,9 +84,20 @@ const ProductForm = ({
     }
   };
   const { formState } = form;
+  const images = form.watch("images");
 
   return (
     <Form {...form}>
+      <style>
+        {`
+          html.dark .upload-field .text-white {
+            color: #ffffff !important;
+          }
+          .upload-field .text-white {
+            color: #000 !important;
+          }
+         `}
+      </style>
       <div className=" ">{JSON.stringify(formState.errors)}</div>
       <form
         className="space-y-8"
@@ -235,6 +249,45 @@ const ProductForm = ({
         </div>
         <div className="upload-field flex flex-col gap-5 md:flex-row">
           {/* Images */}
+          <FormField
+            name="images"
+            control={form.control}
+            render={() => (
+              <FormItem className="w-full ">
+                <FormLabel className=" ">Images</FormLabel>
+                <Card>
+                  <CardContent className="space-y-2 mt-2 min-h-48">
+                    <div className="flex-start space-x-2">
+                      {images.map((image: string) => (
+                        <Image
+                          key={image}
+                          src={image}
+                          alt="product image"
+                          className="w-20 h-20 object-cover object-center rounded-sm"
+                          width={100}
+                          height={100}
+                        />
+                      ))}
+                      <FormControl>
+                        <UploadButton
+                          endpoint="imageUploader"
+                          onClientUploadComplete={(res: { url: string }[]) => {
+                            form.setValue("images", [...images, res[0].url]);
+                          }}
+                          onUploadError={(error: Error) => {
+                            toast({
+                              variant: "destructive",
+                              description: `ERROR! ${error.message}`,
+                            });
+                          }}
+                        />
+                      </FormControl>
+                    </div>
+                  </CardContent>
+                </Card>{" "}
+              </FormItem>
+            )}
+          ></FormField>
         </div>
         <div className="upload-field">{/* Is Featured */}</div>
         <div>
