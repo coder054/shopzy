@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { productDefaultValues } from "@/constants";
+import { productDefaultValues, ROUTES } from "@/constants";
 import { insertProductSchema, updateProductSchema } from "@/lib/validators";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,12 +18,16 @@ import {
   ControllerFieldState,
   ControllerRenderProps,
   FieldValues,
+  SubmitHandler,
   useForm,
   UseFormStateReturn,
 } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { createProduct, updateProduct } from "@/lib/actions/product.actions";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const ProductForm = ({
   type,
@@ -34,6 +38,8 @@ const ProductForm = ({
   product?: Product;
   productId?: string;
 }) => {
+  const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<z.infer<typeof insertProductSchema>>({
     resolver: zodResolver(
       type === "Update" ? updateProductSchema : insertProductSchema,
@@ -41,17 +47,53 @@ const ProductForm = ({
     defaultValues:
       product && type === "Update" ? product : productDefaultValues,
   });
+
+  const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
+    values,
+  ) => {
+    if (type === "Create") {
+      const res = await createProduct(values);
+      if (!res.success) {
+        toast({
+          variant: "destructive",
+          description: res.message,
+        });
+      } else {
+        toast({
+          description: res.message,
+        });
+        router.push(ROUTES.admin.products.base);
+      }
+    } else if (type === "Update") {
+      if (!productId) {
+        router.push(ROUTES.admin.products.base);
+        return;
+      }
+      const res = await updateProduct({ ...values, id: productId || "" });
+      if (!res.success) {
+        toast({
+          variant: "destructive",
+          description: res.message,
+        });
+      } else {
+        router.push(ROUTES.admin.products.base);
+      }
+    }
+  };
+  const { formState } = form;
+
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <div className=" ">{JSON.stringify(formState.errors)}</div>
+      <form
+        className="space-y-8"
+        method="post"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-5 md:flex-row">
           {/* Name */}
           <FormField
-            render={function ({
-              field,
-              fieldState,
-              formState,
-            }): React.ReactElement {
+            render={function ({ field }): React.ReactElement {
               return (
                 <FormItem className="w-full">
                   <FormLabel>Name</FormLabel>
@@ -228,7 +270,7 @@ const ProductForm = ({
             size="lg"
             disabled={form.formState.isSubmitting}
           >
-            {form.formState.isSubmitting ? "Submitting" : `${type} Product`}
+            {form.formState.isSubmitting ? "Submitting" : `${type} Productttt5`}
           </Button>
         </div>
       </form>
