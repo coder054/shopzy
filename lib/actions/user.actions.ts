@@ -204,11 +204,22 @@ export async function updateProfile(user: { name: string; email: string }) {
 export async function getAllUsers({
   page,
   limit = PAGE_SIZE,
+  query,
 }: {
   limit?: number;
   page: number;
+  query: string;
 }) {
   const data = await prisma.user.findMany({
+    where:
+      query && query !== "all"
+        ? {
+            name: {
+              contains: query,
+              mode: "insensitive",
+            },
+          }
+        : {},
     take: limit,
     orderBy: { createdAt: "desc" },
     skip: (page - 1) * limit,
