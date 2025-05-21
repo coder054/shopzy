@@ -128,3 +128,11 @@ export async function getProductById(productId: string) {
 
   return convertToPlainObject(data);
 }
+
+export async function getAllCategories() {
+  const data = await prisma.product.groupBy({
+    by: ["category"],
+    _count: true,
+  });
+  return data;
+}

@@ -2,12 +2,14 @@ import { APP_NAME } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Menu from "./menu";
+import CategoriesDrawer from "./categories-drawer";
 
 export default function Header() {
   return (
     <header className="w-full border-b">
       <div className="wrapper flex-between">
         <div className="flex-start">
+          <CategoriesDrawer />
           <Link href="/" className="flex-start ml-4">
             <Image
               src="/images/logo.svg"
