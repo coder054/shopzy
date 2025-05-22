@@ -15,6 +15,7 @@ import {
 import { Calendar, User } from "lucide-react";
 import { formatDateTime } from "@/lib/utils";
 import Rating from "@/components/shared/product/rating";
+import { useToast } from "@/hooks/use-toast";
 
 const ReviewList = ({
   userId,
@@ -25,9 +26,18 @@ const ReviewList = ({
   productId: string;
   productSlug: string;
 }) => {
+  const { toast } = useToast();
   const [reviews, setReviews] = useState<Review[]>([]);
   const reload = async () => {
-    console.log("review submitted");
+    try {
+      const res = await getReviews({ productId });
+      setReviews([...res.data]);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        description: "error in fetching reviews",
+      });
+    }
   };
 
   useEffect(() => {
