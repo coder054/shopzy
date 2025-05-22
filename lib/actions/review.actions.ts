@@ -1,3 +1,5 @@
+"use server";
+
 import { z } from "zod";
 import { insertReviewSchema } from "../validators";
 import { formatError } from "../utils";
