@@ -14,6 +14,10 @@ export default async function App() {
 
   return (
     <>
+      <div className="hidden aaa">
+        process.env.NEXT_PUBLIC_SERVER_URL:{" "}
+        {process.env.NEXT_PUBLIC_SERVER_URL}{" "}
+      </div>
       {featuredProducts.length > 0 && (
         <ProductCarousel data={featuredProducts} />
       )}
