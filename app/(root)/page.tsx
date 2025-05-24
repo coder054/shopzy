@@ -10,7 +10,8 @@ import {
 export default async function App() {
   const latestProducts = await getLatestProduct();
   const featuredProducts = await getFeaturedProducts();
-  console.log("aaa featured", featuredProducts);
+  console.log("aaa NEXT_PUBLIC_SERVER_URL", process.env.NEXT_PUBLIC_SERVER_URL);
+
   return (
     <>
       {featuredProducts.length > 0 && (
