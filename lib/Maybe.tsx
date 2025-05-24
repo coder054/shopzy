@@ -10,7 +10,8 @@ export class Just<T> {
 export class Nothing {
   constructor() {}
 
-  flatMap<T2>(fn: (a: never) => Maybe<T2>): Maybe<T2> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  flatMap<T2>(_fn: (a: never) => Maybe<T2>): Maybe<T2> {
     return new Nothing();
   }
 }

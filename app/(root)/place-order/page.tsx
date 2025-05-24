@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
-import { auth } from "@/auth";
 import CheckoutSteps from "@/components/shared/checkout-steps";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getMyCart } from "@/lib/actions/cart.actions";
-import { getCurrentUser, getUserById } from "@/lib/actions/user.actions";
+import { getCurrentUser } from "@/lib/actions/user.actions";
 import { formatCurrency } from "@/lib/utils";
 import { ShippingAddress } from "@/types";
 import { ROUTES } from "@/constants";
@@ -33,8 +32,6 @@ const PlaceOrderPage = async () => {
   const headersList = await headers();
   const pathname = headersList.get("x-current-path") || "";
   const cart = await getMyCart();
-  const session = await auth();
-  const userId = session?.user?.id;
 
   const user = await getCurrentUser();
 

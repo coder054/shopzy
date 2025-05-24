@@ -32,7 +32,7 @@ const ReviewList = ({
     try {
       const res = await getReviews({ productId });
       setReviews([...res.data]);
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
         description: "error in fetching reviews",

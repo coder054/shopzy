@@ -7,14 +7,11 @@ import { getMyCart } from "./cart.actions";
 import { getUserById } from "./user.actions";
 import { PAGE_SIZE, ROUTES } from "@/constants";
 import { insertOrderSchema } from "../validators";
-import { Order } from "@/types";
 import { prisma } from "@/db/prisma";
 import { revalidatePath } from "next/cache";
 import { paypal } from "../paypal";
-import { PaymentResult, CartItem } from "@/types";
+import { PaymentResult } from "@/types";
 import { Prisma } from "@prisma/client";
-import { cookies } from "next/headers";
-import { trackSynchronousPlatformIOAccessInDev } from "next/dist/server/app-render/dynamic-rendering";
 
 export const createOrder = async () => {
   try {
@@ -305,7 +302,7 @@ export async function getOrderSummary() {
 
   const salesData: SalesDataType = salesDataRaw.map((entry) => ({
     month: "rr",
-    totalSales: 5,
+    totalSales: Number(entry.totalSales),
   }));
 
   const latestOrders = await prisma.order.findMany({
@@ -336,7 +333,6 @@ export async function getAllOrders({
   page: number;
   query: string;
 }) {
-  const queryFilter = {};
   const data = await prisma.order.findMany({
     where:
       query && query !== "all"

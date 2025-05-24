@@ -14,14 +14,7 @@ import { productDefaultValues, ROUTES } from "@/constants";
 import { insertProductSchema, updateProductSchema } from "@/lib/validators";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  ControllerFieldState,
-  ControllerRenderProps,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-  UseFormStateReturn,
-} from "react-hook-form";
+import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";

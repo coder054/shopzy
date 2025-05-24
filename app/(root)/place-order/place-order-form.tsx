@@ -1,5 +1,5 @@
 "use client";
-import { Check, Divide, FolderMinusIcon, Loader } from "lucide-react";
+import { Check, Loader } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { createOrder } from "@/lib/actions/order.actions";

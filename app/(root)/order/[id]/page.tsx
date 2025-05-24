@@ -1,9 +1,7 @@
 import { getOrderById } from "@/lib/actions/order.actions";
 import { notFound } from "next/navigation";
-import { ShippingAddress } from "@/types";
 import OrderDetailsTable from "./order-details-table";
 import { auth } from "@/auth";
-import { stripVTControlCharacters } from "node:util";
 import Stripe from "stripe";
 
 export const metadata = {
@@ -53,7 +51,6 @@ const OrderDetailsPage = async (props: {
       isAdmin={session?.user?.role === "admin"}
     />
   );
-  return <>Order Details Form</>;
 };
 
 export default OrderDetailsPage;
