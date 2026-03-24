@@ -125,6 +125,7 @@ export const config = {
       console.log("aaa authorized");
       const protectedPaths = [
         /\/shipping-address/,
+        /\/cart/,
         /\/payment-method/,
         /\/place-order/,
         /\/profile/,
