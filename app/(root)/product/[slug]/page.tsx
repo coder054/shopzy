@@ -76,6 +76,7 @@ export default async function ProductDetail(props: {
                 {product.stock > 0 && (
                   <div className=" flex-center">
                     <AddToCart
+                      userId={userId || ""}
                       item={{
                         image: product.images?.[0],
                         name: product.name,

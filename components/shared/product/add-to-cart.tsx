@@ -2,7 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
+import { ROUTES } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
+import { usePushToSignInPage } from "@/hooks/usePushToSignInPage";
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 import { Cart, CartItem } from "@/types";
 import { Loader, Minus, Plus } from "lucide-react";
@@ -12,10 +14,13 @@ import { useTransition } from "react";
 export default function AddToCart({
   item,
   cart,
+  userId,
 }: {
   item: Omit<CartItem, "cartId">;
   cart?: Cart;
+  userId: string;
 }) {
+  const pushToSignInPage = usePushToSignInPage();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const { toast } = useToast();
@@ -89,7 +94,13 @@ export default function AddToCart({
       disabled={isPending}
       className="w-full"
       type="button"
-      onClick={handleAddToCart}
+      onClick={
+        !userId
+          ? () => {
+              pushToSignInPage();
+            }
+          : handleAddToCart
+      }
     >
       {isPending ? (
         <Loader className="w-4 h-4" />
