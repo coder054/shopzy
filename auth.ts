@@ -94,24 +94,24 @@ export const config = {
       return token;
     },
 
-    authorized({ request, auth }: any) {
-      console.log("aaa authorized");
-      const protectedPaths = [
-        /\/shipping-address/,
-        /\/cart/,
-        /\/payment-method/,
-        /\/place-order/,
-        /\/profile/,
-        /\/user\/(.*)/,
-        /\/order\/(.*)/,
-        /\/admin/,
-      ];
-      const { pathname } = request.nextUrl;
-      if (!auth && protectedPaths.some((p) => p.test(pathname))) {
-        return false;
-      }
-      return true;
-    },
+    // authorized({ request, auth }: any) {
+    //   console.log("aaa authorized");
+    //   const protectedPaths = [
+    //     /\/shipping-address/,
+    //     /\/cart/,
+    //     /\/payment-method/,
+    //     /\/place-order/,
+    //     /\/profile/,
+    //     /\/user\/(.*)/,
+    //     /\/order\/(.*)/,
+    //     /\/admin/,
+    //   ];
+    //   const { pathname } = request.nextUrl;
+    //   if (!auth && protectedPaths.some((p) => p.test(pathname))) {
+    //     return false;
+    //   }
+    //   return true;
+    // },
   },
 } satisfies NextAuthConfig;
 
