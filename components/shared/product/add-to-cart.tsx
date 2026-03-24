@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
-import { ROUTES } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
 import { usePushToSignInPage } from "@/hooks/usePushToSignInPage";
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
