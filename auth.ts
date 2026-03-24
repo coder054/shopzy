@@ -4,8 +4,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./db/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export const config = {
   pages: {
@@ -86,31 +84,6 @@ export const config = {
             },
           });
         }
-        if (trigger === "signIn" || trigger === "signUp") {
-          const cookiesObj = await cookies();
-          const sessionCartId = cookiesObj.get("sessionCartId")?.value;
-          if (sessionCartId) {
-            const sessionCart = await prisma.cart.findFirst({
-              where: { sessionCartId },
-            });
-            if (sessionCart) {
-              // override any existing user cart
-              await prisma.cart.deleteMany({
-                where: { userId: user.id },
-              });
-
-              // assign the guest cart to the logged-in user
-              await prisma.cart.update({
-                where: {
-                  id: sessionCart.id,
-                },
-                data: {
-                  userId: user.id,
-                },
-              });
-            }
-          }
-        }
       }
 
       // handle session updates (eg: name change)
@@ -137,29 +110,7 @@ export const config = {
       if (!auth && protectedPaths.some((p) => p.test(pathname))) {
         return false;
       }
-      if (!request.cookies.get("sessionCartId")) {
-        // Check for cart cookie
-        // Generate cart cookie
-        const sessionCartId = crypto.randomUUID();
-
-        // Clone the request headers
-        const newRequestHeaders = new Headers(request.headers);
-
-        // Create a new response and add the new headers
-        const response = NextResponse.next({
-          request: {
-            headers: newRequestHeaders,
-          },
-        });
-
-        // Set the newly generated sessionCartId in the response cookies
-        response.cookies.set("sessionCartId", sessionCartId);
-
-        // Return the response with the sessionCartId set
-        return response;
-      } else {
-        return true;
-      }
+      return true;
     },
   },
 } satisfies NextAuthConfig;

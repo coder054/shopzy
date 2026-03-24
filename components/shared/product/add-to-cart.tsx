@@ -20,6 +20,7 @@ export default function AddToCart({
   cart?: Cart;
   userId: string;
 }) {
+  console.log("aaa cart: ", cart);
   const pushToSignInPage = usePushToSignInPage();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
