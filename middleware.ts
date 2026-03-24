@@ -1,6 +1,5 @@
-import { auth } from "./auth";
-// const middleware = auth
-export const middleware = auth;
+// import { auth } from "./auth";
+// export const middleware = auth;
 
 // export async function middleware(request: NextRequest) {
 //   // Run next-auth middleware first (to get session, etc.)
@@ -26,3 +25,8 @@ export const middleware = auth;
 // export const config = {
 //   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 // };
+
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
+
+export const { auth: middleware } = NextAuth(authConfig as any);
