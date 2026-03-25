@@ -11,7 +11,7 @@ export default async function ProtectedLayout({
   const session = await auth();
 
   if (!session) {
-    redirect(`/api/auth/signin`);
+    redirect(`/api/auth/signin?callbackUrl=/`);
   }
 
   return (
