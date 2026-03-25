@@ -94,7 +94,6 @@ const ProductForm = ({
           }
          `}
       </style>
-      <div className=" ">{JSON.stringify(formState.errors)}</div>
       <form
         className="space-y-8"
         method="post"
