@@ -77,7 +77,7 @@ export async function getAllProducts({
     orderBy:
       sort === "lowest"
         ? { price: "asc" }
-        : sort === "hightest"
+        : sort === "highest"
           ? { price: "desc" }
           : sort === "rating"
             ? { rating: "desc" }
