@@ -77,7 +77,6 @@ const ProductForm = ({
       }
     }
   };
-  const { formState } = form;
   const images = form.watch("images");
   const isFeatured = form.watch("isFeatured");
   const banner = form.watch("banner");
